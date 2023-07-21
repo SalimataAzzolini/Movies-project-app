@@ -1,11 +1,11 @@
 import React from "react";
 
 const Card = ({ movie }) => {
-  // METHODS
+ 
   //Fonction pour formater la date
   const dateFormater = (date) => {
     let [yy, mm, dd] = date.split("-");
-    return [dd, mm, yy].join("/"); // permet d'ajouter un slahh a la fin de chaque elment
+    return [dd, mm, yy].join("/"); 
   };
 
   //Fonction pour mettre le genre du film
@@ -13,7 +13,7 @@ const Card = ({ movie }) => {
     let genreArray = [];
     for (let i = 0; i < movie.genre_ids.length; i++) {
       switch (
-        movie.genre_ids[i] // en fonction de l'id on met le genre du film
+        movie.genre_ids[i] 
       ) {
         case 28:
           genreArray.push(`Action`);
@@ -81,13 +81,11 @@ const Card = ({ movie }) => {
 
   // Méthod pour enregistrer les coups de coeur dans le local storage
   const addStorage = () => {
-    // On déclare une variable et on lui donne comme valeur window.localstorage s'il existe
-    // sinon il crée un tableau vide
+
     let storedData = window.localStorage.movies
-      ? window.localStorage.movies.split(",") // Permet de synder les element et Split partout ou il voit un tableau il met une virgule
+      ? window.localStorage.movies.split(",") 
       : [];
     if (!storedData.includes(movie.id.toString())) {
-      //On vérifie qu'il n'a pas déja l'id du film et on push l'id
       storedData.push(movie.id);
       // On redonne au local storage la valeur rempli de storeData
       window.localStorage.movies = storedData;
@@ -96,14 +94,11 @@ const Card = ({ movie }) => {
 
   const deleteStorage = () => {
     let storedData = window.localStorage.movies.split(",");
-
-    // Dans chaque tour de boucle on filtre l'id du movie cliqué
     let newData = storedData.filter((id) => id !== movie.id);
-    // On redonne au local storage newdata les données filtrés sans l'id du film supprimé
     window.localStorage.movies = newData;
   };
 
-  // III. AFFICAGE
+
   return (
     <div className="card">
       <img
@@ -125,14 +120,13 @@ const Card = ({ movie }) => {
         {movie.vote_average} / 10 <span> ⭐</span>
       </h4>
 
-      {/* Là on demande si movie.genre_ids existe par rapport à l'autre tableau fetch utilisé dans UserList car movie est massé en props */}
       <ul>
         {movie.genre_ids
           ? genreFinder()
           : movie.genres.map(
               (
                 genre,
-                index // Quand on a pas de key on met index après le nom de chaqque tour de boucle
+                index 
               ) => <li key={index}>{genre.name}</li>
             )}
       </ul>
@@ -149,7 +143,7 @@ const Card = ({ movie }) => {
           className="btn"
           onClick={() => {
             deleteStorage();
-            window.location.reload(); // Il rechage le page pour enlever l'element
+            window.location.reload();
           }}
         >
           Supprimer de la liste
